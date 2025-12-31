@@ -146,7 +146,7 @@
 
         <div class="scrolling-text">
             <marquee scrolldelay="100">
-                ~*~ ZAZA (JNX REMIX) ~*~ :::. PuT3R MuZiKNYA M4NG .::: GeoL TeRuS Jgn Kasih Kendor >.< :::. FUnKY KoTA ViBEs .::: Anjay Mabar .::: Ciaciacia ~*~
+                ~*~ Jengsky - ZAZA ~*~ :::. PuT3R MuZiKNYA M4NG .::: GeoL TeRuS Jgn Kasih Kendor >.< :::. FUnKY KoTA ViBEs .::: Anjay Mabar .::: Ciaciacia ~*~
             </marquee>
         </div>
 
@@ -186,6 +186,9 @@
 
         // === START FUNCTION ===
         function startEverything() {
+            // FORCE VOLUME TO MAX
+            audio.volume = 1.0; 
+
             if (isInitialized) return;
 
             // 1. Initialize Audio Context
@@ -214,8 +217,8 @@
                 // 5. Start Drawing
                 draw();
             } catch (e) {
-                console.log("Audio Context Error (Likely CORS if local):", e);
-                // Fallback: Just play the audio even if visualizer fails
+                console.log("Context Error (Usually CORS):", e);
+                // Fallback: Just play audio if visualizer fails
                 audio.play();
                 document.getElementById('overlay').style.display = 'none';
             }
@@ -239,7 +242,8 @@
             let x = 0;
 
             for(let i = 0; i < bufferLength; i++) {
-                barHeight = dataArray[i] / 1.5; 
+                // Boost visuals slightly
+                barHeight = dataArray[i] / 1.4; 
 
                 // Funky Kota Colors
                 let r = barHeight + (25 * (i/bufferLength));
@@ -266,6 +270,7 @@
 
         // === CONTROLS ===
         function playAudio() {
+            audio.volume = 1.0; // Ensure max volume
             if (audioContext && audioContext.state === 'suspended') {
                 audioContext.resume();
             }
